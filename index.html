@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoKi · HUB</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #1a1a2e;
+            --bg-card: #16213e;
+            --bg-card-hover: #1e2a4a;
+            --primary: #e8a0bf;
+            --primary-light: #f0c4d6;
+            --secondary: #9b7eb3;
+            --secondary-light: #b8a0cc;
+            --text: #e0e0e0;
+            --text-dim: #a0a0b0;
+            --text-muted: #707080;
+            --border: rgba(155, 126, 179, 0.2);
+            --success: #7ec8a0;
+            --warning: #e8c87e;
+            --danger: #e87e7e;
+            --radius: 16px;
+            --radius-sm: 10px;
+            --shadow: 0 8px 32px rgba(0,0,0,0.3);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans SC', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 背景装饰 */
+        .bg-decoration {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .bg-decoration::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 20%, rgba(232,160,191,0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(155,126,179,0.08) 0%, transparent 50%);
+            animation: bgFloat 20s ease-in-out infinite;
+        }
+        @keyframes bgFloat {
+            0%, 100% { transform: translate(0,0) rotate(0deg); }
+            50% { transform: translate(-2%,2%) rotate(2deg); }
+        }
+
+        /* 粒子效果 */
+        .particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .particle {
+            position: absolute;
+            width: 4px; height: 4px;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: particleFloat 15s infinite;
+        }
+        @keyframes particleFloat {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* 头部 */
+        .header {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 60px 20px 30px;
+        }
+        .header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+        .header .subtitle {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            font-weight: 300;
+        }
+        .header .disclaimer {
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: rgba(232,160,191,0.1);
+            border: 1px solid rgba(232,160,191,0.2);
+            border-radius: var(--radius-sm);
+            display: inline-block;
+            font-size: 0.85rem;
+            color: var(--primary);
+        }
+
+        /* 容器 */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 卡片通用 */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+        }
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card-title .icon {
+            width: 32px; height: 32px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        /* 日志列表 */
+        .log-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .log-item {
+            padding: 14px 18px;
+            background: rgba(255,255,255,0.03);
+            border-radius: var(--radius-sm);
+            border-left: 3px solid var(--primary);
+            transition: background 0.3s;
+        }
+        .log-item:hover {
+            background: rgba(255,255,255,0.06);
+        }
+        .log-version {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+        .log-date {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        .log-content {
+            font-size: 0.88rem;
+            color: var(--text-dim);
+            line-height: 1.8;
+        }
+        .log-content li {
+            list-style: none;
+            position: relative;
+            padding-left: 16px;
+        }
+        .log-content li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+        }
+
+        /* 团队区域 */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 20px;
+        }
+        .team-member {
+            text-align: center;
+            padding: 20px 10px;
+            background: rgba(255,255,255,0.03);
+            border-radius: var(--radius-sm);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .team-member:hover {
+            background: rgba(255,255,255,0.06);
+            transform: translateY(-4px);
+        }
+        .team-avatar {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+            margin-bottom: 12px;
+            box-shadow: 0 4px 16px rgba(232,160,191,0.3);
+            transition: transform 0.3s;
+        }
+        .team-member:hover .team-avatar {
+            transform: scale(1.05);
+        }
+        .team-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+        .team-role {
+            font-size: 0.8rem;
+            color: var(--primary);
+            margin-top: 4px;
+        }
+
+        /* 脚本代码块 */
+        .script-block {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .script-block::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        .script-code {
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.82rem;
+            color: #c9d1d9;
+            word-break: break-all;
+            line-height: 1.8;
+        }
+        .script-copy {
+            position: absolute;
+            top: 12px; right: 12px;
+            padding: 6px 14px;
+            background: rgba(232,160,191,0.15);
+            border: 1px solid rgba(232,160,191,0.3);
+            border-radius: 6px;
+            color: var(--primary);
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .script-copy:hover {
+            background: var(--primary);
+            color: var(--bg);
+        }
+        .script-copy.copied {
+            background: var(--success);
+            border-color: var(--success);
+            color: #fff;
+        }
+
+        /* 游戏状态列表 */
+        .game-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .game-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.03);
+            border-radius: var(--radius-sm);
+            transition: all 0.3s;
+        }
+        .game-item:hover {
+            background: rgba(255,255,255,0.06);
+        }
+        .game-status {
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            flex-shrink: 0;
+        }
+        .game-status.ok {
+            background: rgba(126,200,160,0.2);
+            color: var(--success);
+        }
+        .game-status.warn {
+            background: rgba(232,200,126,0.2);
+            color: var(--warning);
+        }
+        .game-status.error {
+            background: rgba(232,126,126,0.2);
+            color: var(--danger);
+        }
+        .game-name {
+            font-size: 0.88rem;
+            color: var(--text-dim);
+        }
+
+        /* 反馈区域 */
+        .feedback-box {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .captcha-display {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .captcha-code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 6px;
+            background: rgba(232,160,191,0.1);
+            padding: 10px 24px;
+            border-radius: var(--radius-sm);
+            border: 1px dashed var(--primary);
+            user-select: none;
+        }
+        .captcha-refresh {
+            padding: 8px 16px;
+            background: rgba(155,126,179,0.15);
+            border: 1px solid var(--secondary);
+            border-radius: 8px;
+            color: var(--secondary);
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+        .captcha-refresh:hover {
+            background: var(--secondary);
+            color: #fff;
+        }
+        .feedback-input {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text);
+            font-size: 0.9rem;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.3s;
+        }
+        .feedback-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(232,160,191,0.1);
+        }
+        .feedback-input::placeholder {
+            color: var(--text-muted);
+        }
+        .feedback-submit {
+            padding: 14px 32px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: var(--radius-sm);
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            align-self: flex-start;
+        }
+        .feedback-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(232,160,191,0.3);
+        }
+        .feedback-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .feedback-info {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+        .feedback-info span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .feedback-info .dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--success);
+        }
+
+        /* 注入器列表 */
+        .executor-section {
+            margin-bottom: 28px;
+        }
+        .executor-section:last-child {
+            margin-bottom: 0;
+        }
+        .executor-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        .executor-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .executor-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .executor-badge.free {
+            background: rgba(126,200,160,0.15);
+            color: var(--success);
+        }
+        .executor-badge.paid {
+            background: rgba(232,160,191,0.15);
+            color: var(--primary);
+        }
+        .executor-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 10px;
+        }
+        .executor-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.03);
+            border-radius: var(--radius-sm);
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        .executor-item:hover {
+            background: rgba(255,255,255,0.06);
+            transform: translateX(4px);
+        }
+        .executor-name {
+            font-size: 0.9rem;
+            color: var(--text);
+            font-weight: 500;
+        }
+        .executor-url {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .executor-arrow {
+            color: var(--secondary);
+            font-size: 1.1rem;
+            transition: transform 0.3s;
+        }
+        .executor-item:hover .executor-arrow {
+            transform: translateX(4px);
+        }
+
+        /* 平台标签 */
+        .platform-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .platform-tab {
+            padding: 8px 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .platform-tab:hover, .platform-tab.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-color: transparent;
+            color: #fff;
+        }
+
+        /* 加载动画 */
+        .loading-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+        .loading-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .loader {
+            width: 48px; height: 48px;
+            border: 3px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            padding: 14px 28px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text);
+            font-size: 0.9rem;
+            box-shadow: var(--shadow);
+            z-index: 1001;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+        }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* 响应式 */
+        @media (max-width: 600px) {
+            .header h1 { font-size: 2rem; }
+            .card { padding: 20px; }
+            .game-list { grid-template-columns: 1fr; }
+            .executor-list { grid-template-columns: 1fr; }
+            .team-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* 滚动条 */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--secondary); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+    </style>
+</head>
+<body>
+    <!-- 背景装饰 -->
+    <div class="bg-decoration"></div>
+    <div class="particles" id="particles"></div>
+
+    <!-- 加载层 -->
+    <div class="loading-overlay" id="loading">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- 头部 -->
+    <header class="header">
+        <h1>BoKi · HUB</h1>
+        <p class="subtitle">本脚本仅供学习与交流使用</p>
+        <div class="disclaimer">使用BoKi脚本所产生的任何后果由用户自行承担</div>
+    </header>
+
+    <div class="container">
+        <!-- 脚本更新日志 -->
+        <div class="card" id="script-logs">
+            <div class="card-title">
+                <div class="icon">S</div>
+                脚本更新日志
+            </div>
+            <div class="log-list" id="script-log-list">
+                <!-- 动态填充 -->
+            </div>
+        </div>
+
+        <!-- 网站更新日志 -->
+        <div class="card" id="site-logs">
+            <div class="card-title">
+                <div class="icon">W</div>
+                网站更新日志
+            </div>
+            <div class="log-list" id="site-log-list">
+                <!-- 动态填充 -->
+            </div>
+        </div>
+
+        <!-- 制作团队 -->
+        <div class="card" id="team">
+            <div class="card-title">
+                <div class="icon">T</div>
+                制作团队
+            </div>
+            <div class="team-grid" id="team-grid">
+                <!-- 动态填充 -->
+            </div>
+        </div>
+
+        <!-- 脚本代码 -->
+        <div class="card" id="script-code">
+            <div class="card-title">
+                <div class="icon">C</div>
+                脚本加载代码
+            </div>
+            <div class="script-block">
+                <button class="script-copy" onclick="copyScript()">复制</button>
+                <div class="script-code" id="script-code-text">loadstring(game:HttpGet("https://raw.githubusercontent.com/ZiO9178/jb/refs/heads/main/ZiO.lua"))()</div>
+            </div>
+        </div>
+
+        <!-- 游戏支持状态 -->
+        <div class="card" id="games">
+            <div class="card-title">
+                <div class="icon">G</div>
+                游戏支持状态
+            </div>
+            <div class="game-list" id="game-list">
+                <!-- 动态填充 -->
+            </div>
+        </div>
+
+        <!-- 反馈建议 -->
+        <div class="card" id="feedback">
+            <div class="card-title">
+                <div class="icon">F</div>
+                反馈建议
+            </div>
+            <div class="feedback-box">
+                <div class="captcha-display">
+                    <div class="captcha-code" id="captcha-code">A7B2</div>
+                    <button class="captcha-refresh" onclick="refreshCaptcha()">刷新验证码</button>
+                </div>
+                <input type="text" class="feedback-input" id="captcha-input" placeholder="输入验证码自动发送">
+                <div class="feedback-info">
+                    <span><div class="dot"></div>周末反馈修复 &lt; 12h</span>
+                    <span><div class="dot"></div>工作日反馈修复 &lt; 24h</span>
+                    <span><div class="dot"></div>更新周期约 3~5 天</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 注入器列表 -->
+        <div class="card" id="executors">
+            <div class="card-title">
+                <div class="icon">E</div>
+                注入器列表
+            </div>
+            <div class="platform-tabs">
+                <div class="platform-tab active" onclick="switchPlatform('android')">安卓</div>
+                <div class="platform-tab" onclick="switchPlatform('ios')">iOS</div>
+                <div class="platform-tab" onclick="switchPlatform('pc')">电脑</div>
+                <div class="platform-tab" onclick="switchPlatform('mac')">Mac</div>
+            </div>
+            <div id="executor-content">
+                <!-- 动态填充 -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== 云更新配置 ====================
+        const DATA_URL = './data.json';
+
+        // 备用数据（头像用本地路径）
+        const DEFAULT_DATA = {
+            "script_logs": [
+                {
+                    "version": "v1.0",
+                    "date": "2026-07-08",
+                    "items": ["更新动物医院", "更新躲避恶人"]
+                }
+            ],
+            "site_logs": [
+                {
+                    "version": "UI v1.2",
+                    "date": "2026-07-08",
+                    "items": [
+                        "换了个域名 不会再炸",
+                        "更新网站更新日志和脚本更新日志",
+                        "主题采用豆沙粉和灰紫色调",
+                        "优化移动端响应",
+                        "新增反馈验证码",
+                        "加入制作团队 & 圆形头像"
+                    ]
+                }
+            ],
+            "team": [
+                {
+                    "name": "XingQing",
+                    "role": "作者",
+                    "avatar": "./1000009648.jpg"
+                }
+            ],
+            "script_url": 'loadstring(game:HttpGet("https://raw.githubusercontent.com/ZiO9178/jb/refs/heads/main/ZiO.lua"))()',
+            "games": [
+                {"name": "支持服务器", "status": "ok"},
+                {"name": "自动翻译", "status": "ok"},
+                {"name": "自然灾害", "status": "ok"},
+                {"name": "兵工厂", "status": "ok"},
+                {"name": "DOORS", "status": "ok"},
+                {"name": "OHIO", "status": "ok"},
+                {"name": "极速传奇", "status": "ok"},
+                {"name": "TTK", "status": "ok"},
+                {"name": "踢走一个幸运方块", "status": "ok"},
+                {"name": "启示录", "status": "ok"},
+                {"name": "行动一", "status": "ok"},
+                {"name": "狙击竞技场", "status": "ok"},
+                {"name": "森林99夜", "status": "ok"},
+                {"name": "通缉", "status": "ok"},
+                {"name": "偷走红脑", "status": "ok"},
+                {"name": "动物医院", "status": "ok"}
+            ],
+            "executors": {
+                "android": {
+                    "free": [
+                        {"name": "忍者 (经典)", "url": "deltaexploits.gg"},
+                        {"name": "illusion", "url": "illusion-executor.com"},
+                        {"name": "CODEX", "url": "codex.lol"},
+                        {"name": "阿尔宙斯 (neo)", "url": "spdmteam.com"},
+                        {"name": "FrostWare", "url": "frostware-executor.com"},
+                        {"name": "KRNL", "url": "krnl.cat"},
+                        {"name": "JJSploit", "url": "wearedevs.net"},
+                        {"name": "fluxus", "url": "fluxusteams.com"},
+                        {"name": "cryptic", "url": "getcryptic.net"},
+                        {"name": "罗尼克斯", "url": "ronixstudios.com"},
+                        {"name": "HYDROGEN", "url": "hydrogen.sh"},
+                        {"name": "evon", "url": "evon.cc"},
+                        {"name": "TRIGON", "url": "trigonevo.com"}
+                    ],
+                    "paid": [
+                        {"name": "阿尔宙斯 (v5)", "url": "spdmteam.com"}
+                    ]
+                },
+                "ios": {
+                    "free": [
+                        {"name": "CODEX", "url": "codex.lol"},
+                        {"name": "illusion", "url": "illusion-executor.com"},
+                        {"name": "KRNL", "url": "krnl.cat"},
+                        {"name": "忍者 (经典)", "url": "deltaexploits.gg"},
+                        {"name": "fluxus", "url": "fluxusteams.com"},
+                        {"name": "HYDROGEN", "url": "hydrogen.sh"}
+                    ],
+                    "paid": [
+                        {"name": "ware", "url": "script-ware.com"}
+                    ]
+                },
+                "pc": {
+                    "free": [
+                        {"name": "XENO", "url": "xeno.onl"},
+                        {"name": "Zeus", "url": "github.com"},
+                        {"name": "fluxus", "url": "fluxusteams.com"},
+                        {"name": "Solara", "url": "api.getsolara.gg"},
+                        {"name": "JJSploit", "url": "wearedevs.net"},
+                        {"name": "volcano", "url": "volcano.wtf"},
+                        {"name": "wave", "url": "getwave.gg"},
+                        {"name": "swift", "url": "getswift.vip"},
+                        {"name": "cryptic", "url": "getcryptic.net"}
+                    ],
+                    "paid": [
+                        {"name": "valex", "url": "valex.io"},
+                        {"name": "ware", "url": "script-ware.com"},
+                        {"name": "wave", "url": "getwave.gg"},
+                        {"name": "Seilware", "url": "seliware.com"},
+                        {"name": "zenith", "url": "zenith.win"}
+                    ]
+                },
+                "mac": {
+                    "free": [
+                        {"name": "Hydrogen", "url": "hydrogen.lat"},
+                        {"name": "illusion", "url": "illusion-executor.com"},
+                        {"name": "Zeus", "url": "github.com"}
+                    ],
+                    "paid": [
+                        {"name": "AbySS", "url": "abyssdigital.xyz"},
+                        {"name": "ware", "url": "script-ware.com"}
+                    ]
+                }
+            }
+        };
+
+        let currentData = DEFAULT_DATA;
+        let currentPlatform = 'android';
+        let currentCaptcha = '';
+
+        // ==================== 初始化 ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            loadData();
+            refreshCaptcha();
+        });
+
+        // 创建粒子
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 20; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDelay = Math.random() * 15 + 's';
+                p.style.animationDuration = (10 + Math.random() * 10) + 's';
+                container.appendChild(p);
+            }
+        }
+
+        // ==================== 数据加载 ====================
+        async function loadData() {
+            try {
+                const response = await fetch(DATA_URL + '?t=' + Date.now());
+                if (response.ok) {
+                    const data = await response.json();
+                    currentData = { ...DEFAULT_DATA, ...data };
+                }
+            } catch (e) {
+                console.log('使用本地默认数据');
+            }
+            renderAll();
+            setTimeout(() => {
+                document.getElementById('loading').classList.add('hidden');
+            }, 500);
+        }
+
+        function renderAll() {
+            renderLogs();
+            renderTeam();
+            renderScript();
+            renderGames();
+            renderExecutors();
+        }
+
+        // ==================== 渲染日志 ====================
+        function renderLogs() {
+            const scriptList = document.getElementById('script-log-list');
+            const siteList = document.getElementById('site-log-list');
+
+            scriptList.innerHTML = (currentData.script_logs || []).map(log => `
+                <div class="log-item">
+                    <div class="log-version">${log.version}</div>
+                    <div class="log-date">${log.date}</div>
+                    <ul class="log-content">
+                        ${log.items.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                </div>
+            `).join('');
+
+            siteList.innerHTML = (currentData.site_logs || []).map(log => `
+                <div class="log-item">
+                    <div class="log-version">${log.version}</div>
+                    <div class="log-date">${log.date}</div>
+                    <ul class="log-content">
+                        ${log.items.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                </div>
+            `).join('');
+        }
+
+        // ==================== 渲染团队 ====================
+        function renderTeam() {
+            const grid = document.getElementById('team-grid');
+            grid.innerHTML = (currentData.team || []).map(member => `
+                <div class="team-member">
+                    <img src="${member.avatar}" alt="${member.name}" class="team-avatar" onerror="this.style.display='none'">
+                    <div class="team-name">${member.name}</div>
+                    <div class="team-role">${member.role}</div>
+                </div>
+            `).join('');
+        }
+
+        // ==================== 渲染脚本 ====================
+        function renderScript() {
+            const code = document.getElementById('script-code-text');
+            if (currentData.script_url) {
+                code.textContent = currentData.script_url;
+            }
+        }
+
+        function copyScript() {
+            const code = document.getElementById('script-code-text').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                const btn = document.querySelector('.script-copy');
+                btn.textContent = '已复制';
+                btn.classList.add('copied');
+                showToast('脚本代码已复制到剪贴板');
+                setTimeout(() => {
+                    btn.textContent = '复制';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        // ==================== 渲染游戏 ====================
+        function renderGames() {
+            const list = document.getElementById('game-list');
+            const statusMap = {
+                ok: { icon: 'OK', class: 'ok' },
+                warn: { icon: '!', class: 'warn' },
+                error: { icon: 'X', class: 'error' }
+            };
+            list.innerHTML = (currentData.games || []).map(game => {
+                const s = statusMap[game.status] || statusMap.ok;
+                return `
+                    <div class="game-item">
+                        <div class="game-status ${s.class}">${s.icon}</div>
+                        <div class="game-name">${game.name}正常</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ==================== 渲染注入器 ====================
+        function renderExecutors() {
+            const container = document.getElementById('executor-content');
+            const platform = currentData.executors?.[currentPlatform];
+            if (!platform) return;
+
+            let html = '';
+
+            if (platform.free && platform.free.length > 0) {
+                html += `
+                    <div class="executor-section">
+                        <div class="executor-header">
+                            <h3>${currentPlatform === 'android' ? '安卓' : currentPlatform === 'ios' ? 'iOS' : currentPlatform === 'pc' ? '电脑' : 'Mac'} · 免费</h3>
+                            <span class="executor-badge free">FREE</span>
+                        </div>
+                        <div class="executor-list">
+                            ${platform.free.map(ex => `
+                                <a href="https://${ex.url}" target="_blank" class="executor-item">
+                                    <div>
+                                        <div class="executor-name">${ex.name}</div>
+                                        <div class="executor-url">${ex.url}</div>
+                                    </div>
+                                    <span class="executor-arrow">></span>
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (platform.paid && platform.paid.length > 0) {
+                html += `
+                    <div class="executor-section">
+                        <div class="executor-header">
+                            <h3>${currentPlatform === 'android' ? '安卓' : currentPlatform === 'ios' ? 'iOS' : currentPlatform === 'pc' ? '电脑' : 'Mac'} · 付费</h3>
+                            <span class="executor-badge paid">PAID</span>
+                        </div>
+                        <div class="executor-list">
+                            ${platform.paid.map(ex => `
+                                <a href="https://${ex.url}" target="_blank" class="executor-item">
+                                    <div>
+                                        <div class="executor-name">${ex.name}</div>
+                                        <div class="executor-url">${ex.url}</div>
+                                    </div>
+                                    <span class="executor-arrow">></span>
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+        }
+
+        function switchPlatform(platform) {
+            currentPlatform = platform;
+            document.querySelectorAll('.platform-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            renderExecutors();
+        }
+
+        // ==================== 验证码 & 反馈 ====================
+        function refreshCaptcha() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let code = '';
+            for (let i = 0; i < 4; i++) {
+                code += chars[Math.floor(Math.random() * chars.length)];
+            }
+            currentCaptcha = code;
+            document.getElementById('captcha-code').textContent = code;
+        }
+
+        document.getElementById('captcha-input').addEventListener('input', function(e) {
+            const val = e.target.value.toUpperCase();
+            if (val === currentCaptcha) {
+                e.target.value = '';
+                e.target.placeholder = '已发送，感谢反馈';
+                showToast('反馈已提交，感谢你的建议！');
+                refreshCaptcha();
+                setTimeout(() => {
+                    e.target.placeholder = '输入验证码自动发送';
+                }, 3000);
+            }
+        });
+
+        // ==================== Toast ====================
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // ==================== 定时刷新数据 ====================
+        setInterval(loadData, 300000);
+    </script>
+</body>
+</html>
