@@ -4,8 +4,7 @@
       "version": "v1.0",
       "date": "2026-07-08",
       "items": [
-        "更新动物医院",
-        "更新躲避恶人"
+        "公告",
       ]
     }
   ],
@@ -14,18 +13,13 @@
       "version": "UI v1.2",
       "date": "2026-07-08",
       "items": [
-        "换了个域名 不会再炸",
-        "更新网站更新日志和脚本更新日志",
-        "主题采用豆沙粉和灰紫色调",
-        "优化移动端响应",
-        "新增反馈验证码",
-        "加入制作团队 & 圆形头像"
+        "公告",
       ]
     }
   ],
   "team": [
     {
-      "name": "XingQing",
+      "name": "Z某人",
       "role": "作者",
       "avatar": "./1000009648.jpg"
     }
@@ -36,66 +30,6 @@
       "name": "支持服务器",
       "status": "ok"
     },
-    {
-      "name": "自动翻译",
-      "status": "ok"
-    },
-    {
-      "name": "自然灾害",
-      "status": "ok"
-    },
-    {
-      "name": "兵工厂",
-      "status": "ok"
-    },
-    {
-      "name": "DOORS",
-      "status": "ok"
-    },
-    {
-      "name": "OHIO",
-      "status": "ok"
-    },
-    {
-      "name": "极速传奇",
-      "status": "ok"
-    },
-    {
-      "name": "TTK",
-      "status": "ok"
-    },
-    {
-      "name": "踢走一个幸运方块",
-      "status": "ok"
-    },
-    {
-      "name": "启示录",
-      "status": "ok"
-    },
-    {
-      "name": "行动一",
-      "status": "ok"
-    },
-    {
-      "name": "狙击竞技场",
-      "status": "ok"
-    },
-    {
-      "name": "森林99夜",
-      "status": "ok"
-    },
-    {
-      "name": "通缉",
-      "status": "ok"
-    },
-    {
-      "name": "偷走红脑",
-      "status": "ok"
-    },
-    {
-      "name": "动物医院",
-      "status": "ok"
-    }
   ],
   "executors": {
     "android": {
