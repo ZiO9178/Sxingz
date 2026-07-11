@@ -1,0 +1,286 @@
+{
+  "script_logs": [
+    {
+      "version": "v1.0",
+      "date": "2026-07-08",
+      "items": [
+        "更新动物医院",
+        "更新躲避恶人"
+      ]
+    }
+  ],
+  "site_logs": [
+    {
+      "version": "UI v1.2",
+      "date": "2026-07-08",
+      "items": [
+        "换了个域名 不会再炸",
+        "更新网站更新日志和脚本更新日志",
+        "主题采用豆沙粉和灰紫色调",
+        "优化移动端响应",
+        "新增反馈验证码",
+        "加入制作团队 & 圆形头像"
+      ]
+    }
+  ],
+  "team": [
+    {
+      "name": "XingQing",
+      "role": "作者",
+      "avatar": "./1000009648.jpg"
+    }
+  ],
+  "script_url": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/ZiO9178/jb/refs/heads/main/ZiO.lua\"))()",
+  "games": [
+    {
+      "name": "支持服务器",
+      "status": "ok"
+    },
+    {
+      "name": "自动翻译",
+      "status": "ok"
+    },
+    {
+      "name": "自然灾害",
+      "status": "ok"
+    },
+    {
+      "name": "兵工厂",
+      "status": "ok"
+    },
+    {
+      "name": "DOORS",
+      "status": "ok"
+    },
+    {
+      "name": "OHIO",
+      "status": "ok"
+    },
+    {
+      "name": "极速传奇",
+      "status": "ok"
+    },
+    {
+      "name": "TTK",
+      "status": "ok"
+    },
+    {
+      "name": "踢走一个幸运方块",
+      "status": "ok"
+    },
+    {
+      "name": "启示录",
+      "status": "ok"
+    },
+    {
+      "name": "行动一",
+      "status": "ok"
+    },
+    {
+      "name": "狙击竞技场",
+      "status": "ok"
+    },
+    {
+      "name": "森林99夜",
+      "status": "ok"
+    },
+    {
+      "name": "通缉",
+      "status": "ok"
+    },
+    {
+      "name": "偷走红脑",
+      "status": "ok"
+    },
+    {
+      "name": "动物医院",
+      "status": "ok"
+    }
+  ],
+  "executors": {
+    "android": {
+      "free": [
+        {
+          "name": "忍者 (经典)",
+          "url": "deltaexploits.gg"
+        },
+        {
+          "name": "illusion",
+          "url": "illusion-executor.com"
+        },
+        {
+          "name": "CODEX",
+          "url": "codex.lol"
+        },
+        {
+          "name": "阿尔宙斯 (neo)",
+          "url": "spdmteam.com"
+        },
+        {
+          "name": "FrostWare",
+          "url": "frostware-executor.com"
+        },
+        {
+          "name": "KRNL",
+          "url": "krnl.cat"
+        },
+        {
+          "name": "JJSploit",
+          "url": "wearedevs.net"
+        },
+        {
+          "name": "fluxus",
+          "url": "fluxusteams.com"
+        },
+        {
+          "name": "cryptic",
+          "url": "getcryptic.net"
+        },
+        {
+          "name": "罗尼克斯",
+          "url": "ronixstudios.com"
+        },
+        {
+          "name": "HYDROGEN",
+          "url": "hydrogen.sh"
+        },
+        {
+          "name": "evon",
+          "url": "evon.cc"
+        },
+        {
+          "name": "TRIGON",
+          "url": "trigonevo.com"
+        }
+      ],
+      "paid": [
+        {
+          "name": "阿尔宙斯 (v5)",
+          "url": "spdmteam.com"
+        }
+      ]
+    },
+    "ios": {
+      "free": [
+        {
+          "name": "CODEX",
+          "url": "codex.lol"
+        },
+        {
+          "name": "illusion",
+          "url": "illusion-executor.com"
+        },
+        {
+          "name": "KRNL",
+          "url": "krnl.cat"
+        },
+        {
+          "name": "忍者 (经典)",
+          "url": "deltaexploits.gg"
+        },
+        {
+          "name": "fluxus",
+          "url": "fluxusteams.com"
+        },
+        {
+          "name": "HYDROGEN",
+          "url": "hydrogen.sh"
+        }
+      ],
+      "paid": [
+        {
+          "name": "ware",
+          "url": "script-ware.com"
+        }
+      ]
+    },
+    "pc": {
+      "free": [
+        {
+          "name": "XENO",
+          "url": "xeno.onl"
+        },
+        {
+          "name": "Zeus",
+          "url": "github.com"
+        },
+        {
+          "name": "fluxus",
+          "url": "fluxusteams.com"
+        },
+        {
+          "name": "Solara",
+          "url": "api.getsolara.gg"
+        },
+        {
+          "name": "JJSploit",
+          "url": "wearedevs.net"
+        },
+        {
+          "name": "volcano",
+          "url": "volcano.wtf"
+        },
+        {
+          "name": "wave",
+          "url": "getwave.gg"
+        },
+        {
+          "name": "swift",
+          "url": "getswift.vip"
+        },
+        {
+          "name": "cryptic",
+          "url": "getcryptic.net"
+        }
+      ],
+      "paid": [
+        {
+          "name": "valex",
+          "url": "valex.io"
+        },
+        {
+          "name": "ware",
+          "url": "script-ware.com"
+        },
+        {
+          "name": "wave",
+          "url": "getwave.gg"
+        },
+        {
+          "name": "Seilware",
+          "url": "seliware.com"
+        },
+        {
+          "name": "zenith",
+          "url": "zenith.win"
+        }
+      ]
+    },
+    "mac": {
+      "free": [
+        {
+          "name": "Hydrogen",
+          "url": "hydrogen.lat"
+        },
+        {
+          "name": "illusion",
+          "url": "illusion-executor.com"
+        },
+        {
+          "name": "Zeus",
+          "url": "github.com"
+        }
+      ],
+      "paid": [
+        {
+          "name": "AbySS",
+          "url": "abyssdigital.xyz"
+        },
+        {
+          "name": "ware",
+          "url": "script-ware.com"
+        }
+      ]
+    }
+  }
+}
