@@ -28,7 +28,11 @@
   "games": [
     {
       "name": "支持服务器",
-      "status": "ok"
+      "status": ""
+    },
+    {
+      "name": "极速传奇",
+      "status": "正常"
     },
   ],
   "executors": {
